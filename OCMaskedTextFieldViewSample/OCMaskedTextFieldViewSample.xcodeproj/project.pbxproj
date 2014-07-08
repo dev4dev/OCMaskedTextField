@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6360F204196C248D00DC3366 /* OCMaskedTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6360F203196C248D00DC3366 /* OCMaskedTextFieldView.m */; };
 		6FC7E13118F7C42F0015D3F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FC7E13018F7C42F0015D3F6 /* Foundation.framework */; };
 		6FC7E13318F7C42F0015D3F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FC7E13218F7C42F0015D3F6 /* CoreGraphics.framework */; };
 		6FC7E13518F7C42F0015D3F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FC7E13418F7C42F0015D3F6 /* UIKit.framework */; };
@@ -21,7 +22,6 @@
 		6FC7E15218F7C42F0015D3F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FC7E13418F7C42F0015D3F6 /* UIKit.framework */; };
 		6FC7E15A18F7C42F0015D3F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6FC7E15818F7C42F0015D3F6 /* InfoPlist.strings */; };
 		6FC7E15C18F7C42F0015D3F6 /* OCMaskedTextFieldViewSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FC7E15B18F7C42F0015D3F6 /* OCMaskedTextFieldViewSampleTests.m */; };
-		6FC7E16818F7C4590015D3F6 /* OCMaskedTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FC7E16718F7C4590015D3F6 /* OCMaskedTextFieldView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6360F202196C248D00DC3366 /* OCMaskedTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMaskedTextFieldView.h; sourceTree = "<group>"; };
+		6360F203196C248D00DC3366 /* OCMaskedTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMaskedTextFieldView.m; sourceTree = "<group>"; };
 		6FC7E12D18F7C42F0015D3F6 /* OCMaskedTextFieldViewSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCMaskedTextFieldViewSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FC7E13018F7C42F0015D3F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6FC7E13218F7C42F0015D3F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -54,8 +56,6 @@
 		6FC7E15718F7C42F0015D3F6 /* OCMaskedTextFieldViewSampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OCMaskedTextFieldViewSampleTests-Info.plist"; sourceTree = "<group>"; };
 		6FC7E15918F7C42F0015D3F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6FC7E15B18F7C42F0015D3F6 /* OCMaskedTextFieldViewSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OCMaskedTextFieldViewSampleTests.m; sourceTree = "<group>"; };
-		6FC7E16618F7C4590015D3F6 /* OCMaskedTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMaskedTextFieldView.h; sourceTree = "<group>"; };
-		6FC7E16718F7C4590015D3F6 /* OCMaskedTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCMaskedTextFieldView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +82,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6360F201196C248D00DC3366 /* OCMaskedTextFieldView */ = {
+			isa = PBXGroup;
+			children = (
+				6360F202196C248D00DC3366 /* OCMaskedTextFieldView.h */,
+				6360F203196C248D00DC3366 /* OCMaskedTextFieldView.m */,
+			);
+			name = OCMaskedTextFieldView;
+			path = ../../OCMaskedTextFieldView;
+			sourceTree = "<group>";
+		};
 		6FC7E12418F7C42F0015D3F6 = {
 			isa = PBXGroup;
 			children = (
@@ -115,7 +125,7 @@
 		6FC7E13618F7C42F0015D3F6 /* OCMaskedTextFieldViewSample */ = {
 			isa = PBXGroup;
 			children = (
-				6FC7E16518F7C4340015D3F6 /* OCMaskedTextFieldView */,
+				6360F201196C248D00DC3366 /* OCMaskedTextFieldView */,
 				6FC7E13F18F7C42F0015D3F6 /* AppDelegate.h */,
 				6FC7E14018F7C42F0015D3F6 /* AppDelegate.m */,
 				6FC7E14218F7C42F0015D3F6 /* Main.storyboard */,
@@ -154,15 +164,6 @@
 				6FC7E15818F7C42F0015D3F6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		6FC7E16518F7C4340015D3F6 /* OCMaskedTextFieldView */ = {
-			isa = PBXGroup;
-			children = (
-				6FC7E16618F7C4590015D3F6 /* OCMaskedTextFieldView.h */,
-				6FC7E16718F7C4590015D3F6 /* OCMaskedTextFieldView.m */,
-			);
-			name = OCMaskedTextFieldView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,7 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FC7E14718F7C42F0015D3F6 /* ViewController.m in Sources */,
-				6FC7E16818F7C4590015D3F6 /* OCMaskedTextFieldView.m in Sources */,
+				6360F204196C248D00DC3366 /* OCMaskedTextFieldView.m in Sources */,
 				6FC7E14118F7C42F0015D3F6 /* AppDelegate.m in Sources */,
 				6FC7E13D18F7C42F0015D3F6 /* main.m in Sources */,
 			);
@@ -470,6 +471,7 @@
 				6FC7E16118F7C42F0015D3F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6FC7E16218F7C42F0015D3F6 /* Build configuration list for PBXNativeTarget "OCMaskedTextFieldViewSampleTests" */ = {
 			isa = XCConfigurationList;
@@ -478,6 +480,7 @@
 				6FC7E16418F7C42F0015D3F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

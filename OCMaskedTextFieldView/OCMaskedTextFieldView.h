@@ -46,6 +46,11 @@
 
 @interface OCMaskedTextFieldView : UIView <UITextFieldDelegate>
 
+@property (nonatomic, strong, readonly) UITextField *maskedTextField;
+
+//when set YES, view shows the placeholder text when the textfield ends editing;
+@property (nonatomic, assign) BOOL showPlaceholder;
+
 - (id)initWithFrame: (CGRect)frame;
 - (id)initWithFrame: (CGRect)frame andMask: (NSString*)maskString;
 - (id)initWithFrame: (CGRect)frame andMask: (NSString*)maskString showMask:(BOOL)showMask;
@@ -53,7 +58,6 @@
 - (void)setMask: (NSString*)maskString;
 - (void)setNumericBlank: (NSString*) numblank alphanumericBlank: (NSString*)alphaNumBlank letterBlank:(NSString*)letBlank;
 
-- (UITextField*)maskedTextField;
 //get the user input text without any format
 - (NSString*)getRawInputText;
 //validation for the completion of the masked field
@@ -61,9 +65,6 @@
 
 //resets the field
 - (void)showMask;
-
-//when set YES, view shows the placeholder text when the textfield ends editing;
-- (void)setPlaceholderMode:(BOOL)mode;
 
 //apply the mask onto a raw input
 - (void)setRawInput:(NSString*)rawInput;

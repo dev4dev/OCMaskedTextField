@@ -30,26 +30,26 @@
 #define MASK_CHAR_ALPHANUMERIC @"&"
 #define MASK_CHAR_LETTER       @"?"
 
-@implementation OCMaskedTextFieldView
-{
-    //mask
-    NSString *format;
-    
-    //masking character for blank parts;
-    NSString *numericBlank;
-    NSString *alphaNumericBlank;
-    NSString *letterBlank;
-    
-    //user input is stored here
-    NSString *inputText;
-    
-    //subViews
-    UITextField *maskedTextField;
-    UIButton *button;
-    
-    BOOL showPlaceholder;
-}
+@interface OCMaskedTextFieldView ()
 
+//mask
+@property (nonatomic, copy) NSString *format;
+
+//masking character for blank parts;
+@property (nonatomic, copy) NSString *numericBlank;
+@property (nonatomic, copy) NSString *alphaNumericBlank;
+@property (nonatomic, copy) NSString *letterBlank;
+
+//user input is stored here
+@property (nonatomic, copy) NSString *inputText;
+
+//subViews
+@property (nonatomic, strong) UITextField *maskedTextField;
+@property (nonatomic, strong) UIButton *button;
+
+@end
+
+@implementation OCMaskedTextFieldView
 #pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
@@ -66,7 +66,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        format    = maskString;
+        self.format = maskString;
         [self configureViewShowMask:showMask];
         [self autoKeyboardDecision];
     }
@@ -86,82 +86,86 @@
 
 -(void)configureViewShowMask:(BOOL)showMask
 {
-    showPlaceholder = NO;
-    inputText = @"";
+    self.showPlaceholder = NO;
+    self.inputText = @"";
     
-    numericBlank      = @"_";
-    alphaNumericBlank = @"_";
-    letterBlank       = @"_";
+    self.numericBlank      = @"_";
+    self.alphaNumericBlank = @"_";
+    self.letterBlank       = @"_";
     
     [self configureTextField];
     [self configureButton];
     
     if (showMask)
     {
-        [self textField:maskedTextField shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
+        [self textField:self.maskedTextField shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
     }
 }
 
 -(void)configureTextField
 {
-    maskedTextField = [[UITextField alloc] init];
-    [maskedTextField setFrame:self.bounds];
-    [self addSubview:maskedTextField];
-    maskedTextField.delegate = self;
+    self.maskedTextField = [[UITextField alloc] init];
+    [self.maskedTextField setFrame:self.bounds];
+    [self addSubview:self.maskedTextField];
+    self.maskedTextField.delegate = self;
 }
 
 -(void)configureButton
 {
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setBackgroundColor:[UIColor clearColor]];
-    [button setAlpha:1];
+    self.button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.button setBackgroundColor:[UIColor clearColor]];
+    [self.button setAlpha:1];
     CGRect rect = self.bounds;
-    [button setFrame:rect];
-    [button addTarget:self action:@selector(buttonTouched) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:button];
+    [self.button setFrame:rect];
+    [self.button addTarget:self action:@selector(buttonTouched) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.button];
 }
 
 - (void)setMask: (NSString*) maskString
 {
-    format = maskString;
-    [maskedTextField resignFirstResponder];
+    self.format = maskString;
+    [self.maskedTextField resignFirstResponder];
     [self autoKeyboardDecision];
-    maskedTextField.text = @"";
+    self.maskedTextField.text = @"";
 }
 
 - (void)setNumericBlank: (NSString*) numblank alphanumericBlank: (NSString*)alphaNumBlank letterBlank:(NSString*)letBlank
 {
-    numericBlank = numblank;
-    alphaNumericBlank = alphaNumBlank;
-    letterBlank = letBlank;
+    self.numericBlank = numblank;
+    self.alphaNumericBlank = alphaNumBlank;
+    self.letterBlank = letBlank;
     
-    [maskedTextField resignFirstResponder];
-    maskedTextField.text = @"";
+    [self.maskedTextField resignFirstResponder];
+    self.maskedTextField.text = @"";
 }
 
 -(void)buttonTouched
 {
-    [maskedTextField becomeFirstResponder];
-}
-
--(UITextField*)maskedTextField
-{
-    return maskedTextField;
+    [self.maskedTextField becomeFirstResponder];
 }
 
 - (NSString*)getRawInputText
 {
-    return inputText;
+    return self.inputText;
+}
+
+- (void)
+setShowPlaceholder:(BOOL)showPlaceholder
+{
+	_showPlaceholder = showPlaceholder;
+	if (showPlaceholder && !self.maskedTextField.isFirstResponder) {
+		self.maskedTextField.text = @"";
+	}
 }
 
 - (BOOL)isFieldComplete
 {
     NSString *speacialChars = [NSString stringWithFormat:@"%@%@%@",MASK_CHAR_ALPHANUMERIC,MASK_CHAR_NUMERIC,MASK_CHAR_LETTER];
     NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:speacialChars] invertedSet];
-    NSString *rawFormat = [format stringByTrimmingCharactersInSet:characterSet];
+    NSString *rawFormat = [self.format stringByTrimmingCharactersInSet:characterSet];
     rawFormat = [rawFormat stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    return rawFormat.length == inputText.length;
+    return rawFormat.length == self.inputText.length;
 }
 
 
@@ -171,15 +175,15 @@
 {
     [self selectTextForInput:textField atRange:NSMakeRange([self calculateCaretLocation], 0)];
     
-    if (showPlaceholder && inputText.length == 0)
+    if (self.showPlaceholder && self.inputText.length == 0)
     {
-        [self textField:maskedTextField shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
+        [self textField:self.maskedTextField shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
     }
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (showPlaceholder && inputText.length == 0)
+    if (self.showPlaceholder && self.inputText.length == 0)
     {
         textField.text = @"";
     }
@@ -202,7 +206,7 @@
     if ([string isEqualToString:@""])
     {
         //Delete character mode
-        inputText = [inputText substringToIndex:inputText.length-(inputText.length>0)];
+        self.inputText = [self.inputText substringToIndex:self.inputText.length-(self.inputText.length>0)];
     }
     else
     {
@@ -219,20 +223,20 @@
             return NO;
         }
         //add one character
-        inputText = [inputText stringByAppendingString:string];
+        self.inputText = [self.inputText stringByAppendingString:string];
     }
     
     NSString *finalString = @"";
     int k = 0;
     int caretLocation = -1;
-    for (int i = 0; i < format.length; i++)
+    for (int i = 0; i < self.format.length; i++)
     {
-        NSString* formatCharacter = [format substringWithRange:NSMakeRange(i, 1)];
+        NSString* formatCharacter = [self.format substringWithRange:NSMakeRange(i, 1)];
         if ([self isSpecialCharacter:formatCharacter])
         {
-            if (k < inputText.length)
+            if (k < self.inputText.length)
             {
-                NSString *inputSubstring = [inputText substringWithRange:NSMakeRange(k, 1)];
+                NSString *inputSubstring = [self.inputText substringWithRange:NSMakeRange(k, 1)];
                 k++;
                 finalString = [finalString stringByAppendingString:inputSubstring];
             }
@@ -258,14 +262,14 @@
 
 - (void)showMask
 {
-    inputText = @"";
-    [self textField:maskedTextField shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
+    self.inputText = @"";
+    [self textField:self.maskedTextField shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
 }
 
 - (void)setPlaceholderMode:(BOOL)mode
 {
     //NO by default
-    showPlaceholder = mode;
+    self.showPlaceholder = mode;
 }
 
 #pragma mark - Text Field Caret placement
@@ -283,12 +287,12 @@
 {
     int k = 0;
     int caretLoc = -1;
-    for (int i = 0; i < format.length; i++)
+    for (int i = 0; i < self.format.length; i++)
     {
-        NSString* formatCharacter = [format substringWithRange:NSMakeRange(i, 1)];
+        NSString* formatCharacter = [self.format substringWithRange:NSMakeRange(i, 1)];
         if ([self isSpecialCharacter:formatCharacter])
         {
-            if (k == inputText.length)
+            if (k == self.inputText.length)
             {
                 caretLoc = i;
             }
@@ -297,7 +301,7 @@
     }
     if (caretLoc == -1)
     {
-        caretLoc = format.length;
+        caretLoc = self.format.length;
     }
     return caretLoc;
 }
@@ -323,15 +327,15 @@
     int counter = 0;
     
     //iterate through the format string until the next special character slot to be edited is found
-    for (int i = 0; i < format.length; i++)
+    for (int i = 0; i < self.format.length; i++)
     {
-        NSString* formatCharacter = [format substringWithRange:NSMakeRange(i, 1)];
+        NSString* formatCharacter = [self.format substringWithRange:NSMakeRange(i, 1)];
         if ([self isSpecialCharacter:formatCharacter])
         {
             //"counter"th special character
             
             //current mask character is to be tested with a valid character set
-            if (counter == inputText.length)
+            if (counter == self.inputText.length)
             {
                 NSCharacterSet* charSet = [self characterSetForSpecialCharacter:formatCharacter];
                 NSRange r = [string rangeOfCharacterFromSet: charSet];
@@ -365,15 +369,15 @@
 {
     if ([specialCharacter isEqualToString:MASK_CHAR_NUMERIC])
     {
-        return numericBlank;
+        return self.numericBlank;
     }
     else if ([specialCharacter isEqualToString:MASK_CHAR_ALPHANUMERIC])
     {
-        return alphaNumericBlank;
+        return self.alphaNumericBlank;
     }
     else if ([specialCharacter isEqualToString:MASK_CHAR_LETTER])
     {
-        return letterBlank;
+        return self.letterBlank;
     }
     else
     {
@@ -444,7 +448,7 @@
     
     NSMutableArray *indexArr = [[NSMutableArray alloc] init];
     NSRange range = { 0, BUFFER_SIZE };
-    NSUInteger end = [format length];
+    NSUInteger end = [self.format length];
     while (range.location < end)
     {
         unichar buffer[BUFFER_SIZE];
@@ -452,7 +456,7 @@
         {
             range.length = end - range.location;
         }
-        [format getCharacters: buffer range: range];
+        [self.format getCharacters: buffer range: range];
         range.location += BUFFER_SIZE;
         for (unsigned i=0 ; i<range.length ; i++)
         {
@@ -473,7 +477,7 @@
 {
     int hardIndex = 0;
     NSRange range = { 0, BUFFER_SIZE };
-    NSUInteger end = [format length];
+    NSUInteger end = [self.format length];
     while (range.location < end)
     {
         unichar buffer[BUFFER_SIZE];
@@ -481,7 +485,7 @@
         {
             range.length = end - range.location;
         }
-        [format getCharacters: buffer range: range];
+        [self.format getCharacters: buffer range: range];
         range.location += BUFFER_SIZE;
         for (unsigned i=0 ; i<range.length ; i++)
         {
@@ -496,14 +500,14 @@
             }
         }
     }
-    [maskedTextField setKeyboardType:UIKeyboardTypeNumberPad];
+    [self.maskedTextField setKeyboardType:UIKeyboardTypeNumberPad];
 }
 
 #pragma mark - Clear
 
 -(void)dealloc
 {
-    maskedTextField.delegate = nil;
+    self.maskedTextField.delegate = nil;
 }
 
 @end

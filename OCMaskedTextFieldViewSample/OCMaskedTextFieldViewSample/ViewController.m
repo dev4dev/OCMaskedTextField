@@ -91,6 +91,8 @@
     [[textField2 maskedTextField] setTintColor:KILL_LA_KILL_RED_COLOR];
     [[textField2 maskedTextField] setKeyboardAppearance:UIKeyboardAppearanceDark];
     [self setupTextField:[textField2 maskedTextField]];
+	textField2.maskedTextField.placeholder = @"Birthday";
+	textField2.showPlaceholder = YES;
     [self.view addSubview:textField2];
     
     //phone number field
